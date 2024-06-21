@@ -1,40 +1,70 @@
 package org.core.game;
 
+import java.util.Arrays;
+
+import org.core.game.helper.Output;
+import org.core.game.helper.UserInput;
+
 public class ConsoleGame {
 	private String name;
-	MenuItem [] menuItems;
+	private MenuItem [] menuItems;
+	private UserInput userInput;
 	
-	public ConsoleGame(String name) {
+	public ConsoleGame(String name, MenuItem [] menuItems) {
 		this.name = name;
-		menuItems = new MenuItem[] {};
+		this.menuItems = Arrays.copyOf(menuItems, menuItems.length + 1);
+		this.menuItems[this.menuItems.length - 1] = new ExitMenu(this.menuItems.length);
+		userInput = UserInput.getInstance();
 	}
 	
 	public void start() {
-		showMessage("Welcome to game");
+		showMessage("Welcome to %s".formatted(name));
+
+		while (true) {
+			showMenu();
+			var selectedMenuItem = selectMenuItem();
+			
+			if (null == selectedMenuItem) {
+				showAlert("Wrong Input");
+				continue;
+			} else if (selectedMenuItem instanceof ExitMenu exitMenu) {
+				exitMenu.play();
+				break;
+			}
+			selectedMenuItem.play();	
+		}
 	}
 	
+	private void showAlert(String message) {
+		Output.showAlert(message);
+	}
+
 	private void showMessage(String message) {
-		var messageLenght = message.length();
-		var starLength = messageLenght * 2 + messageLenght;
-		for (int i = 0; i < starLength; i ++)  {
-			System.out.print("*");
-		}
-		var formatedMessage = "%n*%%%ds%%%ds%n"
-								.formatted(messageLenght * 2 - 1, starLength - (messageLenght*2))
-								.formatted(message ,"*");
-		System.out.print(formatedMessage);
-		for (int i = 0; i < starLength; i ++)  {
-			System.out.print("*");
-		}
+		Output.showMessage(message);
 	}
 	
 	private void showMenu() {
-		for(var item : menuItems) {
-			System.out.printf("%d %-10s%n", item.getId(), item.getName());
+		Output.showMenuItems(getMenuItemsName());
+	}
+	
+	private String [] getMenuItemsName() {
+		String [] menuItemNames = new String [menuItems.length];
+		for (int i = 0; i < menuItems.length; i ++) {
+			menuItemNames[i] = menuItems[i].getName();
 		}
+		return menuItemNames;
 	}
 	
 	private MenuItem selectMenuItem() {
-		return null;
+		int id = askForMenuItem("Select Menu Item");
+		if (id > menuItems.length || id < 0) {
+			return null;
+		}
+		return menuItems[id - 1];
+	}
+	
+	private int askForMenuItem(String message) {
+		Output.askForInput(message);
+		return userInput.getIntInput();
 	}
 }
