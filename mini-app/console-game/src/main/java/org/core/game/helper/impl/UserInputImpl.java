@@ -9,7 +9,9 @@ public class UserInputImpl implements UserInput {
 	private static Scanner scanner;
 	
 	public UserInputImpl() {
-		scanner = new Scanner(System.in);
+		if(null == scanner) {
+			scanner = new Scanner(System.in);			
+		}
 	}
 	
 	@Override

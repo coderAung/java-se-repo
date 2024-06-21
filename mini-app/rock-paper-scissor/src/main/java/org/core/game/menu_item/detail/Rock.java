@@ -5,13 +5,10 @@ import org.core.game.menu_item.Item;
 public class Rock extends Item {
 	
 	public Rock() {
-		super("Rock");
+		super(Item.ROCK);
+		this.winTo = Item.SCISSOR;
+		this.loseTo = Item.PAPER;
 	}
 
-	@Override
-	public Result against(Item item) {
-
-		return null;
-	}
 
 }

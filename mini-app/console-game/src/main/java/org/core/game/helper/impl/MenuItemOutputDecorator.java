@@ -24,7 +24,7 @@ public class MenuItemOutputDecorator implements OutputDecorator {
 	@Override
 	public String getFormattedString() {
 		int maxLength = getMaxLength();
-		String formattedString = "%%d-%%%ds".formatted(maxLength+2);
+		String formattedString = "%%d - %%-%ds".formatted(maxLength+2);
 		return formattedString;
 	}
 

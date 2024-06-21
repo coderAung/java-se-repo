@@ -23,6 +23,7 @@ public class ConsoleGame {
 		while (true) {
 			showMenu();
 			var selectedMenuItem = selectMenuItem();
+			System.out.println();
 			
 			if (null == selectedMenuItem) {
 				showAlert("Wrong Input");

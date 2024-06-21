@@ -32,10 +32,15 @@ public class Output {
 	public static void showMenuItems(String[] menuItemsNames) {
 		var decorator = OutputDecorator.getMenuItemOutputDecorator(menuItemsNames);
 		var formattedString = decorator.getFormattedString();
-		System.out.println(formattedString);
+
 		for(int i = 0; i < menuItemsNames.length; i ++) {
 			System.out.println(formattedString.formatted(i+1, menuItemsNames[i]));			
 		}
+	}
+
+	public static void showSimpleMessage(String message1, int limit, String message2) {
+		var formattedString = "%%%ds : %%s".formatted(limit).formatted(message1, message2);
+		System.out.println(formattedString);
 	}
 	
 }
