@@ -27,5 +27,6 @@
   </build>
   <modules>
   	<module>console-game</module>
+  	<module>rock-paper-scissor</module>
   </modules>
 </project>
