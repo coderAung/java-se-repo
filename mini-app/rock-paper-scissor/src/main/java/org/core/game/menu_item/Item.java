@@ -18,10 +18,6 @@ public abstract class Item implements ComparableItem {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Item(String name) {
 		this.name = name;
 	}
